@@ -1,14 +1,7 @@
 name: React Test Workflow
 
 on:
-  push:
-    branches:
-      - main
-      - development
-  pull_request:
-    branches:
-      - main
-      - development
+  workflow_call:
 
 jobs:
   test:
