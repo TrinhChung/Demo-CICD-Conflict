@@ -12,6 +12,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
+        <p>step 3</p>
         <p>
           すべてはこの星で　生き続けるために。
         </p>
