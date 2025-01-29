@@ -27,3 +27,5 @@ jobs:
           script: |
             cd /home/${{ secrets.USER_NAME }}/Documents/Project/Demo-CICD-Conflict
             git pull
+            git run build
+            serve -s build
