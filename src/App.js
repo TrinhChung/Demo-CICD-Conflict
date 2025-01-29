@@ -2,6 +2,10 @@ import logo from './logo.svg';
 import './App.css';
 
 function App() {
+  console.log("Step 1")
+
+  console.log("Step 2")
+
   return (
     <div className="App">
       <header className="App-header">
