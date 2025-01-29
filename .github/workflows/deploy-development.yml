@@ -1,7 +1,9 @@
 name: Deploy on Development
 
 on:
-    branches: ["development"]
+  push:
+    branches:
+      - development
 
 jobs:
   tests:
