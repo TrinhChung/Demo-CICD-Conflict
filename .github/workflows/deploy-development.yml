@@ -1,0 +1,29 @@
+name: Deploy on Development
+
+on:
+  push:
+    branches:
+      - development
+
+jobs:
+  tests:
+    uses: ./.github/workflows/test-react.yml
+  
+  build:
+    needs: [tests]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Executing remote command
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          USERNAME: ${{ secrets.USER_NAME }}
+          PORT: ${{ secrets.PORT }}
+          KEY: ${{ secrets.SSH_KEY }}
+          script: |
+            cd /home/${{ secrets.USER_NAME }}/Documents/Project/Demo-CICD-Conflict
+            git pull
