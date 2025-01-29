@@ -6,6 +6,8 @@ function App() {
 
   console.log("Step 2")
 
+  console.log("Step 3")
+
   return (
     <div className="App">
       <header className="App-header">
