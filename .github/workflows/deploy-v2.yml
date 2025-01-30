@@ -1,0 +1,37 @@
+name: Deploy V2
+
+on:
+  push:
+    branches: # コミットされたブランチに基づいて、それぞれの環境にデプロイを実行する
+      - test1
+
+jobs:
+  tests:
+    uses: ./.github/workflows/test-react.yml
+  
+  build:
+    # テストが成功した場合のみ、次のステップを実行する
+    needs: [tests]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+
+      # サーバーを接続する
+      - name: Build React app
+        run: npm run build
+      
+      # サーバーを接続する
+      # されたソースコードを実行する
+      # 私のサーバーのリソースが少ないため、サーバー上にビルドされたソースコードを実行しません

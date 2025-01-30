@@ -1,15 +1,16 @@
-name: Deploy on Development
+name: Deploy V1
 
 on:
   push:
-    branches:
-      - test1
+    branches: # コミットされたブランチに基づいて、それぞれの環境にデプロイを実行する
+      - test1 
 
 jobs:
   tests:
     uses: ./.github/workflows/test-react.yml
   
   build:
+    # テストが成功した場合のみ、次のステップを実行する
     needs: [tests]
     runs-on: ubuntu-latest
     strategy:
@@ -17,6 +18,8 @@ jobs:
         node-version: [18.x]
     steps:
       - uses: actions/checkout@v3
+
+      # サーバーを接続する
       - name: Executing remote command
         uses: appleboy/ssh-action@master
         with:
@@ -24,6 +27,9 @@ jobs:
           USERNAME: ${{ secrets.USER_NAME }}
           PORT: ${{ secrets.PORT }}
           KEY: ${{ secrets.SSH_KEY }}
+          # Pull -> Build -> Runを実行 
+          # デバッグモードでエラーの結果を明確に確認するため、ビルドは実行しない
+          # React は既に実行中のため、再実行しない
           script: |
             cd /home/${{ secrets.USER_NAME }}/Documents/Project/Demo-CICD-Conflict
             git pull
